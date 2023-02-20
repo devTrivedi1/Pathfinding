@@ -12,4 +12,11 @@ public class NodeSystem
     Node parent;
 
     bool isWalkable;
+
+    public NodeSystem (Vector3 gridPos, Vector3 worldPos)
+    {
+        this.gridPos = gridPos;
+        this.worldPos = worldPos;
+       
+    }   
 }
