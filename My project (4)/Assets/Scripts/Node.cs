@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Node
 {
-    public Vector3 gridPos, worldPos;
+    public Vector3 gridPosition;
+    public Vector3 worldPosition;
 
-    int gCost, hCost, fCost;
+    public int gCost;
+    public int hCost;
 
     bool isWalkable;
 
@@ -15,10 +17,13 @@ public class Node
 
     public Node(Vector3 gridPos, Vector3 worldPos)
     {
-        this.gridPos = gridPos;
-        this.worldPos = worldPos;
+        this.gridPosition = gridPos;
+        this.worldPosition = worldPos;
     }
 
+    public int fCost
+    {
+        get { return gCost + hCost; }
 
-
+    }
 }

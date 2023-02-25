@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    [SerializeField] Vector3 gridSize;
+    [SerializeField] Vector3Int gridSize;
      public GameObject gameObjectCube;
     int total;
     public Node[] nodes;
@@ -17,7 +17,7 @@ public class Grid : MonoBehaviour
 
     void CreateGrid()
     {
-        total = (int)gridSize.x * (int)gridSize.z;
+        total = gridSize.x * gridSize.z;
         nodes = new Node[total];
 
         for (int z = 0; z < gridSize.z; z++)
@@ -25,18 +25,13 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < gridSize.x; x++)
             {
                 Vector3 localPosition = new Vector3(x, 0, z);
-                Vector3 worldPosition = localPosition * gridSize.x;
-                int totalNodesSpawn = z + x;
+                Vector3 worldPosition = new Vector3(localPosition.x * gridSize.x, 0, localPosition.z * gridSize.z);
+                int totalNodesSpawn = z + x * gridSize.x;
                 nodes[totalNodesSpawn] = new Node(localPosition, worldPosition);
                 nodes[totalNodesSpawn].cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 nodes[totalNodesSpawn].cube.GetComponent<MeshRenderer>().material.color = Color.white;
                 nodes[totalNodesSpawn].cube.transform.position = worldPosition;
                 nodes[totalNodesSpawn].cube.transform.localPosition = localPosition;
-
-                //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                //cube.transform.position = worldPosition;
-                //cube.transform.localPosition = localPosition;
-                //cube.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
             }
 
         }
@@ -44,7 +39,7 @@ public class Grid : MonoBehaviour
 
     public Node GetStartingNode(Vector3Int nodePosition)
     {
-        int index = nodePosition.x + nodePosition.z * total;
+        int index = nodePosition.z + nodePosition.x * gridSize.x;
         return nodes[index];
     }
 }
