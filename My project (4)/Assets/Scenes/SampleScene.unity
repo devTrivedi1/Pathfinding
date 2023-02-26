@@ -310,7 +310,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1076207061}
-  - component: {fileID: 1076207062}
   - component: {fileID: 1076207063}
   - component: {fileID: 1076207064}
   m_Layer: 0
@@ -335,23 +334,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1076207062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1076207059}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526d7c0da3d5d1a459ae9fab14dcb3e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unwalkableMask:
-    serializedVersion: 2
-    m_Bits: 0
-  gridWorldSize: {x: 5, y: 5}
-  nodeRadius: 0.5
 --- !u!114 &1076207063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,8 +346,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2375eab8936be4243af68dc91897c89e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 4, y: 0, z: 3}
-  gameObjectCube: {fileID: 0}
+  gridSize: {x: 6, y: 0, z: 6}
+  total: 0
 --- !u!114 &1076207064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,8 +355,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076207059}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c644ab98bcdb0c74982c57b29cbfce29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startNodePosition: {x: 4, y: 0, z: 4}

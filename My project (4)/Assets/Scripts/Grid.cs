@@ -6,7 +6,6 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     [SerializeField] Vector3Int gridSize;
-     public GameObject gameObjectCube;
     int total;
     public Node[] nodes;
 
@@ -26,7 +25,7 @@ public class Grid : MonoBehaviour
             {
                 Vector3 localPosition = new Vector3(x, 0, z);
                 Vector3 worldPosition = new Vector3(localPosition.x * gridSize.x, 0, localPosition.z * gridSize.z);
-                int totalNodesSpawn = z + x * gridSize.x;
+                int totalNodesSpawn = x + z * gridSize.x;
                 nodes[totalNodesSpawn] = new Node(localPosition, worldPosition);
                 nodes[totalNodesSpawn].cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 nodes[totalNodesSpawn].cube.GetComponent<MeshRenderer>().material.color = Color.white;
@@ -39,7 +38,12 @@ public class Grid : MonoBehaviour
 
     public Node GetStartingNode(Vector3Int nodePosition)
     {
-        int index = nodePosition.z + nodePosition.x * gridSize.x;
+        if (nodePosition.x < 0 || nodePosition.x >= gridSize.x ||
+           nodePosition.z < 0 || nodePosition.z >= gridSize.z)
+        {
+            return null;
+        }
+        int index = nodePosition.x + nodePosition.z * gridSize.x;
         return nodes[index];
     }
 }
