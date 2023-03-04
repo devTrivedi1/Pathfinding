@@ -7,6 +7,7 @@ public class AStar : MonoBehaviour
     Grid grid;
 
     [SerializeField] Vector3Int startNodePosition;
+    List<Node> neighbourNodes = new List<Node>(); 
 
     private void Start()
     {
@@ -16,32 +17,30 @@ public class AStar : MonoBehaviour
         Node rightNode = grid.GetStartingNode(startNodePosition + rightNodePosition);
         if (rightNode != null)
         {
-            rightNode.cube.GetComponent<MeshRenderer>().material.color = Color.blue;
+            rightNode.cubeObject.GetComponent<MeshRenderer>().material.color = Color.blue;
         }
 
         Vector3Int leftNodePosition = new Vector3Int(-1, 0, 0);
         Node leftNode = grid.GetStartingNode(startNodePosition + leftNodePosition);
         if (leftNode != null)
         {
-
-            leftNode.cube.GetComponent<MeshRenderer>().material.color = Color.green;
+            leftNode.cubeObject.GetComponent<MeshRenderer>().material.color = Color.green;
         }
 
         Vector3Int topNodePosition = new Vector3Int(0, 0, 1);
         Node topNode = grid.GetStartingNode(startNodePosition + topNodePosition);
         if (topNode != null)
         {
-
-            topNode.cube.GetComponent<MeshRenderer>().material.color = Color.red;
+            topNode.cubeObject.GetComponent<MeshRenderer>().material.color = Color.red;
         }
 
         Vector3Int bottomNodePosition = new Vector3Int(0, 0, -1);
         Node bottomNode = grid.GetStartingNode(startNodePosition + bottomNodePosition);
         if (bottomNode != null)
         {
-
-            bottomNode.cube.GetComponent<MeshRenderer>().material.color = Color.yellow;
+            bottomNode.cubeObject.GetComponent<MeshRenderer>().material.color = Color.yellow;
         }
-
     }
+
+    
 }
