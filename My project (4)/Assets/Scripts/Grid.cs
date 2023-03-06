@@ -29,15 +29,13 @@ public class Grid : MonoBehaviour
                 Vector3 worldPosition = new Vector3(localPosition.x * gridSize.x, 0, localPosition.z * gridSize.z);
                 int totalNodesSpawn = x + z * gridSize.x;
                 nodes[totalNodesSpawn] = new Node(localPosition, worldPosition);
-                nodes[totalNodesSpawn].Cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                nodes[totalNodesSpawn].Cube.GetComponent<MeshRenderer>().material.color = Color.white;
-                nodes[totalNodesSpawn].Cube.transform.position = worldPosition;
+                nodes[totalNodesSpawn].Cube = Instantiate(nodePrefab, worldPosition, Quaternion.identity);
                 nodes[totalNodesSpawn].Cube.transform.localPosition = localPosition;
             }
         }
     }
 
-    public Node GetStartingNode(Vector3Int nodePosition)
+    public Node GetNodeBasedOnPosition(Vector3Int nodePosition)
     {
         if (nodePosition.x < 0 || nodePosition.x >= gridSize.x ||
            nodePosition.z < 0 || nodePosition.z >= gridSize.z)
@@ -47,17 +45,13 @@ public class Grid : MonoBehaviour
         int index = nodePosition.x + nodePosition.z * gridSize.x;
         return nodes[index];
     }
-    int CalculateDistance(Vector3Int currentPosition, Vector3Int distance)
+    public float CalculateDistance(Vector3 startPosition, Vector3 destinationPosition)
     {
-        /*Vector3Int distanceValue = new Vector3Int
-            (Mathf.Abs(currentPosition.x - distance.x),
-            Mathf.Abs(currentPosition.y - distance.y),
-            Mathf.Abs(currentPosition.z - distance.z));*/
+        Vector3 distanceValue = new Vector3
+            (Mathf.Abs(startPosition.x - destinationPosition.x),
+            Mathf.Abs(startPosition.y - destinationPosition.y),
+            Mathf.Abs(startPosition.z - destinationPosition.z));
 
-        Vector3Int distanceValue;
-        distanceValue.x = Mathf.Abs(currentPosition.x - distanceValue.x);
-        distanceValue.y = Mathf.Abs(currentPosition.y - distanceValue.y);
-        distanceValue.z = Mathf.Abs(currentPosition.z - distanceValue.z);
 
         return distanceValue.x + distanceValue.y + distanceValue.z;
     }

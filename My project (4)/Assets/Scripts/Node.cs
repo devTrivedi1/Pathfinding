@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Node
 {
@@ -11,20 +13,21 @@ public class Node
 
     public int gCost;
     public int hCost;
+    public int fCost;
 
     bool isWalkable;
 
     public GameObject cubeObject;
 
-    public Text gCostText;
-    public Text hCostText;
-    public Text fCostText;
+    public TextMeshProUGUI gCostText;
+    public TextMeshProUGUI hCostText;
+    public TextMeshProUGUI fCostText;
 
 
-    public Node(Vector3 gridPos, Vector3 worldPos)
+    public Node(Vector3 gridPosition, Vector3 worldPosition)
     {
-        this.gridPosition = gridPos;
-        this.worldPosition = worldPos;
+        this.gridPosition = gridPosition;
+        this.worldPosition = worldPosition;
     }
 
     public GameObject Cube
@@ -36,9 +39,9 @@ public class Node
         set
         {
             cubeObject = value;
-            gCostText = cubeObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
-            hCostText = cubeObject.transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
-            fCostText = cubeObject.transform.GetChild(0).transform.GetChild(2).GetComponent<Text>();
+            gCostText = cubeObject.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            hCostText = cubeObject.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            fCostText = cubeObject.transform.GetChild(0).transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         }
     }
     public int GCost
@@ -52,6 +55,8 @@ public class Node
         {
             gCost = value;
             gCostText.text = value.ToString();
+            fCost = gCost + hCost;
+            fCostText.text = fCost.ToString();
         }
     }
 
@@ -65,11 +70,8 @@ public class Node
         {
             hCost = value;
             hCostText.text = value.ToString();
+            fCost = gCost + hCost;
+            fCostText.text = fCost.ToString();
         }
-    }
-    public int fCost
-    {
-        get { return gCost + hCost; }
-
     }
 }
