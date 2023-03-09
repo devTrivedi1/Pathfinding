@@ -306,6 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: {x: 6, y: 0, z: 6}
+  nodePrefab: {fileID: 4636544810164809787, guid: e403849a4b1380941967dc8866a364e1, type: 3}
 --- !u!4 &1720523756
 Transform:
   m_ObjectHideFlags: 0
@@ -333,7 +334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c644ab98bcdb0c74982c57b29cbfce29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startNodePosition: {x: 0, y: 0, z: 0}
+  startNodePosition: {x: 2, y: 0, z: 2}
+  goalNodePosition: {x: 5, y: 0, z: 5}
 --- !u!1 &2050796554
 GameObject:
   m_ObjectHideFlags: 0

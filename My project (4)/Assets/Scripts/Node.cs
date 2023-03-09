@@ -5,8 +5,9 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
-public class Node
+public class Node : IComparable
 {
     public Vector3 gridPosition;
     public Vector3 worldPosition;
@@ -73,5 +74,21 @@ public class Node
             fCost = gCost + hCost;
             fCostText.text = fCost.ToString();
         }
+    }
+
+    public int CompareTo(object obj)
+    {
+        Node otherNode = (Node)obj;
+
+        if(fCost < otherNode.fCost)
+        {
+            return -1;
+        }
+        else if(fCost > otherNode.fCost)
+        {
+            return 1;
+        }
+
+        return 0;
     }
 }

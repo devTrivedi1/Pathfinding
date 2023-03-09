@@ -10,16 +10,39 @@ public class AStar : MonoBehaviour
     [SerializeField] Vector3Int startNodePosition;
     [SerializeField] Vector3Int goalNodePosition;
 
+    List<Node> openList = new List<Node>();
+    List<Node> closedList = new List<Node>();
+
     List<Node> neighbourNodes = new List<Node>();
 
+    Node currentNode;
+    Node goalNode;
+    
     private void Start()
     {
         grid = GetComponent<Grid>();
-        Node goalNode = grid.GetNodeBasedOnPosition(goalNodePosition);
+        goalNode = grid.GetNodeBasedOnPosition(goalNodePosition);
         goalNode.cubeObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
+
+        currentNode = grid.GetNodeBasedOnPosition(startNodePosition);
+        openList.Add(currentNode);
+        openList = closedList;
+        closedList.Contains(currentNode);
+       
+    }
+
+    private void Update()
+    {
+        openList.Sort();
+        currentNode = openList[0];
+        openList.RemoveAt(0);
+
         
-        while (true)
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
+
             neighbourNodes.Clear();
 
             Vector3Int rightNodePosition = new Vector3Int(1, 0, 0);
@@ -54,17 +77,17 @@ public class AStar : MonoBehaviour
                 neighbourNodes.Add(bottomNode);
             }
             FindFCost();
-            break;
-        }
 
+        }
     }
-    
+
     void FindFCost()
     {
         for (int i = 0; i < neighbourNodes.Count; i++)
         {
             neighbourNodes[i].GCost = (int)grid.CalculateDistance(startNodePosition, neighbourNodes[i].gridPosition);
-            neighbourNodes[i].HCost = (int)grid.CalculateDistance(neighbourNodes[i].gridPosition, goalNodePosition); 
+            neighbourNodes[i].HCost = (int)grid.CalculateDistance(neighbourNodes[i].gridPosition, goalNodePosition);
+            openList.Add(neighbourNodes[i]);
         }
     }
 
