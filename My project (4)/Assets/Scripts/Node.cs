@@ -9,12 +9,15 @@ using System;
 
 public class Node : IComparable
 {
-    public Vector3 gridPosition;
-    public Vector3 worldPosition;
+    public Vector3Int gridPosition;
+    public Vector3Int worldPosition;
+
+    public Node parent;
 
     public int gCost;
     public int hCost;
     public int fCost;
+    public int version;
 
     bool isWalkable;
 
@@ -25,7 +28,7 @@ public class Node : IComparable
     public TextMeshProUGUI fCostText;
 
 
-    public Node(Vector3 gridPosition, Vector3 worldPosition)
+    public Node(Vector3Int gridPosition, Vector3Int worldPosition)
     {
         this.gridPosition = gridPosition;
         this.worldPosition = worldPosition;

@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2375eab8936be4243af68dc91897c89e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 6, y: 0, z: 6}
+  gridSize: {x: 8, y: 0, z: 8}
   nodePrefab: {fileID: 4636544810164809787, guid: e403849a4b1380941967dc8866a364e1, type: 3}
 --- !u!114 &1076207064
 MonoBehaviour:
@@ -360,5 +360,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c644ab98bcdb0c74982c57b29cbfce29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startNodePosition: {x: 3, y: 0, z: 2}
-  goalNodePosition: {x: 5, y: 0, z: 5}
+  startNodePosition: {x: 0, y: 0, z: 0}
+  startNodePosition_1: {x: 4, y: 0, z: 2}
+  startNodePosition_2: {x: 3, y: 0, z: 5}
+  startNodePosition_3: {x: 6, y: 0, z: 4}
+  goalNodePosition: {x: 3, y: 0, z: 7}
+  goalNodePosition_1: {x: 7, y: 0, z: 3}
+  goalNodePosition_2: {x: 6, y: 0, z: 6}
+  goalNodePosition_3: {x: 7, y: 0, z: 5}
