@@ -360,11 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c644ab98bcdb0c74982c57b29cbfce29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startNodePosition: {x: 0, y: 0, z: 0}
-  startNodePosition_1: {x: 4, y: 0, z: 2}
-  startNodePosition_2: {x: 3, y: 0, z: 5}
-  startNodePosition_3: {x: 6, y: 0, z: 4}
-  goalNodePosition: {x: 3, y: 0, z: 7}
-  goalNodePosition_1: {x: 7, y: 0, z: 3}
-  goalNodePosition_2: {x: 6, y: 0, z: 6}
-  goalNodePosition_3: {x: 7, y: 0, z: 5}
+  startNodePosition: {x: 1, y: 0, z: 7}
+  startNodePosition_1: {x: 0, y: 0, z: 0}
+  goalNodePosition: {x: 2, y: 0, z: 3}
+  goalNodePosition_1: {x: 6, y: 0, z: 5}

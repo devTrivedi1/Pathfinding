@@ -19,7 +19,8 @@ public class Node : IComparable
     public int fCost;
     public int version;
 
-    bool isWalkable;
+    public bool vistedPath;
+
 
     public GameObject cubeObject;
 
@@ -91,7 +92,6 @@ public class Node : IComparable
         {
             return 1;
         }
-
         return 0;
     }
 }

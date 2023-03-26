@@ -43,14 +43,10 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public Node GetNodeBasedOnPosition(Vector3Int nodePosition)
+    public Node GetNodeBasedOnPosition(Vector3 nodePosition)
     {
-        if (nodePosition.x < 0 || nodePosition.x >= gridSize.x ||
-           nodePosition.z < 0 || nodePosition.z >= gridSize.z)
-        {
-            return null;
-        }
-        int index = nodePosition.x + nodePosition.z * gridSize.x;
+       
+        int index = (int)(nodePosition.x + nodePosition.z * gridSize.x);
         return nodes[index];
     }
    
