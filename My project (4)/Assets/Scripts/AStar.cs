@@ -8,20 +8,11 @@ public class AStar : MonoBehaviour
 {
     Grid grid;
 
-    [Header("Start Node Positions")]
-    [SerializeField] Vector3Int startNodePosition;
-    [SerializeField] Vector3Int startNodePosition_1;
-
-    [Header("Goal Node Positions")]
-    [SerializeField] Vector3Int goalNodePosition;
-    [SerializeField] Vector3Int goalNodePosition_1;
-
-
     List<Node> neighbourNodes = new List<Node>();
     List<Node> openList = new List<Node>();
     List<Node> closedList = new List<Node>();
-    List<Node> finalPath = new List<Node>();
-
+    /*    List<Node> finalPath = new List<Node>();
+    */
     Node startNode;
     Node goalNode;
     Node currentNode;
@@ -34,30 +25,29 @@ public class AStar : MonoBehaviour
         grid = GetComponent<Grid>();
     }
 
-    private void Update()
+    public bool InitializeAstar(Vector3Int startNodePosition, Vector3Int goalNodePosition, out List<Node> finalPath)
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        openList = new List<Node>();
+        while (true)
         {
+
+            if (openList.Count <= 0)
+            {
+                finalPath = null;
+                return false;
+            }
             grid.ClearGrid();
-            FindFCost(startNodePosition);
+            FindFCost(startNodePosition, goalNodePosition);
             SetNewNeighbors(startNodePosition, goalNodePosition);
             openList.Add(startNode);
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            grid.ClearGrid();
-            FindFCost(startNodePosition_1);
-            SetNewNeighbors(startNodePosition_1, goalNodePosition_1);
-            openList.Add(startNode);
-        }
-
-        if (Input.GetKey(KeyCode.Space) && !pathFound)
-        {
-            CreateNeighbors();
+            if (!pathFound)
+            {
+                CreateNeighbors(out finalPath);
+            }
         }
     }
 
-    void CreateNeighbors()
+    void CreateNeighbors(out List<Node> finalPath)
     {
         openList.Sort();
         currentNode = openList[0];
@@ -95,11 +85,12 @@ public class AStar : MonoBehaviour
             Node bottomNode = grid.GetNodeBasedOnPosition(currentNode.gridPosition + bottomNodePosition);
             neighbourNodes.Add(bottomNode);
         }
-        CalculateNeighborNodes();
+        CalculateNeighborNodes(out finalPath);
     }
 
-    void CalculateNeighborNodes()
+    void CalculateNeighborNodes(out List<Node> finalPath)
     {
+        finalPath = new List<Node>();
         for (int i = 0; i < neighbourNodes.Count; i++)
         {
             neighbourNodes[i].cubeObject.GetComponent<MeshRenderer>().material.color = Color.green;
@@ -108,7 +99,7 @@ public class AStar : MonoBehaviour
             {
                 neighbourNodes[i].parent = currentNode;
                 pathFound = true;
-                CreateFinalPath(goalNode);
+                CreateFinalPath(goalNode, ref finalPath);
                 for (int k = 0; k < finalPath.Count; k++)
                 {
                     finalPath[k].Cube.GetComponent<MeshRenderer>().material.color = Color.white;
@@ -143,7 +134,7 @@ public class AStar : MonoBehaviour
 
         return distanceValue.x + distanceValue.y + distanceValue.z;
     }
-    void FindFCost(Vector3Int startNode)
+    void FindFCost(Vector3Int startNode, Vector3Int goalNodePosition)
     {
         for (int i = 0; i < neighbourNodes.Count; i++)
         {
@@ -156,7 +147,6 @@ public class AStar : MonoBehaviour
     {
         openList.Clear();
         closedList.Clear();
-        finalPath.Clear();
 
         startNode = grid.GetNodeBasedOnPosition(startPosition);
         startNode.Cube.GetComponent<MeshRenderer>().material.color = Color.cyan;
@@ -175,14 +165,13 @@ public class AStar : MonoBehaviour
         goalNode.parent = null;
     }
 
-    void CreateFinalPath(Node node)
+    void CreateFinalPath(Node node, ref List<Node> finalPath)
     {
         finalPath.Add(node);
         if (node.parent != null)
         {
-            CreateFinalPath(node.parent);
+            CreateFinalPath(node.parent, ref finalPath);
         }
-        return;
     }
 }
 
