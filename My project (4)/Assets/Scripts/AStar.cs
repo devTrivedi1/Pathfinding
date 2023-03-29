@@ -11,8 +11,7 @@ public class AStar : MonoBehaviour
     List<Node> neighbourNodes = new List<Node>();
     List<Node> openList = new List<Node>();
     List<Node> closedList = new List<Node>();
-    /*    List<Node> finalPath = new List<Node>();
-    */
+
     Node startNode;
     Node goalNode;
     Node currentNode;
@@ -27,27 +26,27 @@ public class AStar : MonoBehaviour
 
     public bool InitializeAstar(Vector3Int startNodePosition, Vector3Int goalNodePosition, out List<Node> finalPath)
     {
-        openList = new List<Node>();
-        while (true)
+        SetStartAndGoalNode(startNodePosition, goalNodePosition);
+        ClearAstarStats();
+        finalPath = new List<Node>();
+        openList.Add(startNode);
+        while (!pathFound)
         {
-
+            MakeNewCurrentNodeAndClearNeighbors();
+            if (!pathFound)
+            {
+                CreateNeighbors(out finalPath);
+            }
+            CheckIfCurrentNodeIsTheGoalNode();
             if (openList.Count <= 0)
             {
                 finalPath = null;
                 return false;
             }
-            grid.ClearGrid();
-            FindFCost(startNodePosition, goalNodePosition);
-            SetNewNeighbors(startNodePosition, goalNodePosition);
-            openList.Add(startNode);
-            if (!pathFound)
-            {
-                CreateNeighbors(out finalPath);
-            }
         }
+        return pathFound;
     }
-
-    void CreateNeighbors(out List<Node> finalPath)
+    void MakeNewCurrentNodeAndClearNeighbors()
     {
         openList.Sort();
         currentNode = openList[0];
@@ -57,7 +56,10 @@ public class AStar : MonoBehaviour
 
         closedList.Add(currentNode);
         neighbourNodes.Clear();
+    }
 
+    void CreateNeighbors(out List<Node> finalPath)
+    {
         Vector3Int rightNodePosition = new Vector3Int(1, 0, 0);
         if (currentNode.gridPosition.x + 1 < grid.gridSize.x)
         {
@@ -88,6 +90,13 @@ public class AStar : MonoBehaviour
         CalculateNeighborNodes(out finalPath);
     }
 
+    void CheckIfCurrentNodeIsTheGoalNode()
+    {
+        if (currentNode == goalNode)
+        {
+            pathFound = true;
+        }
+    }
     void CalculateNeighborNodes(out List<Node> finalPath)
     {
         finalPath = new List<Node>();
@@ -100,6 +109,7 @@ public class AStar : MonoBehaviour
                 neighbourNodes[i].parent = currentNode;
                 pathFound = true;
                 CreateFinalPath(goalNode, ref finalPath);
+                finalPath.Reverse();
                 for (int k = 0; k < finalPath.Count; k++)
                 {
                     finalPath[k].Cube.GetComponent<MeshRenderer>().material.color = Color.white;
@@ -134,25 +144,19 @@ public class AStar : MonoBehaviour
 
         return distanceValue.x + distanceValue.y + distanceValue.z;
     }
-    void FindFCost(Vector3Int startNode, Vector3Int goalNodePosition)
-    {
-        for (int i = 0; i < neighbourNodes.Count; i++)
-        {
-            neighbourNodes[i].GCost = CalculateDistance(startNode, neighbourNodes[i].gridPosition);
-            neighbourNodes[i].HCost = CalculateDistance(neighbourNodes[i].gridPosition, goalNodePosition);
-        }
-    }
 
-    void SetNewNeighbors(Vector3Int startPosition, Vector3Int goalPosition)
+    void SetStartAndGoalNode(Vector3Int startPosition, Vector3Int goalPosition)
     {
-        openList.Clear();
-        closedList.Clear();
-
         startNode = grid.GetNodeBasedOnPosition(startPosition);
         startNode.Cube.GetComponent<MeshRenderer>().material.color = Color.cyan;
 
         goalNode = grid.GetNodeBasedOnPosition(goalPosition);
         goalNode.cubeObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
+    }
+    void ClearAstarStats()
+    {
+        openList.Clear();
+        closedList.Clear();
 
         pathFound = false;
 
@@ -163,6 +167,8 @@ public class AStar : MonoBehaviour
         goalNode.GCost = 0;
         goalNode.HCost = 0;
         goalNode.parent = null;
+
+        grid.ClearGrid();
     }
 
     void CreateFinalPath(Node node, ref List<Node> finalPath)

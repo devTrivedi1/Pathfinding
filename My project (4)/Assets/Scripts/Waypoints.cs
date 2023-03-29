@@ -7,31 +7,42 @@ public class Waypoints : MonoBehaviour
 {
     AStar aStar;
     List<Node> finalPath;
-    bool followPath;
-    int index;
+    [SerializeField] bool followPath;
+    [SerializeField] int index;
     [SerializeField] int speed;
+    [SerializeField] Vector3Int startNode;
+    [SerializeField] Vector3Int goalNode;
     void Start()
     {
         aStar = FindObjectOfType<AStar>();
-        followPath = aStar.InitializeAstar(new Vector3Int(4,0,4), new Vector3Int(6,0,6), out finalPath);
+        followPath = aStar.InitializeAstar(startNode, goalNode, out finalPath);
         index = 0;
+        SetStartPositionForObject();
     }
 
     void Update()
     {
         if (followPath)
         {
-            if(Vector3.Distance(transform.position, finalPath[index].worldPosition) <= 0.5f)
+            if (Vector3.Distance(transform.position, finalPath[index].worldPosition) <= 0.1f)
             {
                 index++;
-                if(index >= finalPath.Count)
+                if (index >= finalPath.Count)
                 {
                     followPath = false;
                     return;
                 }
             }
             Vector3 direction = (finalPath[index].worldPosition - transform.position).normalized;
-            transform.position += finalPath[index].worldPosition * speed;
+            transform.position += direction * speed * Time.deltaTime;
+        }
+    }
+
+    void SetStartPositionForObject()
+    {
+        if (followPath)
+        {
+            transform.position = finalPath[index].worldPosition;
         }
     }
 }

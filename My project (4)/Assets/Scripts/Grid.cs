@@ -14,12 +14,10 @@ public class Grid : MonoBehaviour
     {
         CreateGrid();
     }
-
     void CreateGrid()
     {
         total = gridSize.x * gridSize.z;
         nodes = new Node[total];
-
 
         for (int z = 0; z < gridSize.z; z++)
         {
@@ -30,11 +28,11 @@ public class Grid : MonoBehaviour
                 int totalNodesSpawn = x + z * gridSize.x;
                 nodes[totalNodesSpawn] = new Node(localPosition, worldPosition);
                 nodes[totalNodesSpawn].Cube = Instantiate(nodePrefab, worldPosition, Quaternion.identity);
-                nodes[totalNodesSpawn].Cube.transform.localPosition = localPosition;
+                nodes[totalNodesSpawn].Cube.transform.position = worldPosition;
+                nodes[totalNodesSpawn].Cube.transform.localScale = new Vector3(gridSize.x, 1, gridSize.z);
             }
         }
     }
-
     public void ClearGrid()
     {
         for (int i = 0; i < nodes.Length; i++)
@@ -45,10 +43,7 @@ public class Grid : MonoBehaviour
 
     public Node GetNodeBasedOnPosition(Vector3 nodePosition)
     {
-       
         int index = (int)(nodePosition.x + nodePosition.z * gridSize.x);
         return nodes[index];
     }
-   
-
 }
