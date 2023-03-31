@@ -21,13 +21,11 @@ public class Node : IComparable
 
     public bool vistedPath;
 
-
     public GameObject cubeObject;
 
     public TextMeshProUGUI gCostText;
     public TextMeshProUGUI hCostText;
     public TextMeshProUGUI fCostText;
-
 
     public Node(Vector3Int gridPosition, Vector3Int worldPosition)
     {

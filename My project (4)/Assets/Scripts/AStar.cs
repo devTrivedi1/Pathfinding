@@ -17,8 +17,6 @@ public class AStar : MonoBehaviour
     Node currentNode;
 
     bool pathFound;
-
-    int algoVersion;
     private void Awake()
     {
         grid = GetComponent<Grid>();
@@ -114,7 +112,6 @@ public class AStar : MonoBehaviour
                 {
                     finalPath[k].Cube.GetComponent<MeshRenderer>().material.color = Color.white;
                 }
-                algoVersion++;
             }
             if (!closedList.Contains(neighbourNodes[i]))
             {
